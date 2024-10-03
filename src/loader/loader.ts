@@ -74,8 +74,6 @@ export function githubDiscussionsBlogLoader({
             updated: z.date(),
             published: z.date(),
             readingTime: z.string(),
-            githubUrl: z.string(),
-            number: z.number(),
             category: z.object({
                 id: z.string(),
                 name: z.string(),
@@ -90,6 +88,9 @@ export function githubDiscussionsBlogLoader({
                 username: z.string(),
                 url: z.string(),
             }),
+            githubUrl: z.string(),
+            githubDiscussionId: z.string(),
+            githubDiscussionNumber: z.number(),
         })
     };
 }

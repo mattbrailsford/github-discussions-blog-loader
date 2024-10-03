@@ -34,7 +34,7 @@ export async function githubPostProcessor(config: AstroConfig) {
                 description: frontmatter?.description ?? truncate(text, 150),
                 body: html,
                 published: frontmatter?.published ? new Date(frontmatter?.published) : input.created,
-                readingTime: readingTime(text, 240).text,
+                readingTime: readingTime(text, 240).text
             };
             return { post, metadata: { ...metadata, frontmatter } };
         }

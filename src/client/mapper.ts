@@ -13,12 +13,13 @@ export function githubMapper(mappings: GitHubMappings) {
         body: node.body,
         created: new Date(node.createdAt),
         updated: new Date(node.updatedAt),
-        githubUrl: node.url,
-        number: node.number,
         category: mapCategory(node.category),
         tags: mapTags(node.labels),
         series: mapSeries(node.labels),
-        author: mapActor(node.author)
+        author: mapActor(node.author),
+        githubUrl: node.url,
+        githubDiscussionId: node.id,
+        githubDiscussionNumber: node.number
     });
 
     const mapCategory = (category: any) : GitHubCategory => ({

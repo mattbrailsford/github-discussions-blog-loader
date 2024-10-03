@@ -26,12 +26,13 @@ export type GitHubPost = Record<string, unknown> & {
     body: string
     created: Date
     updated: Date
-    githubUrl: string
-    number: number
     category: GitHubCategory
     tags: string[]
     series?: GitHubSeries
     author: GitHubActor
+    githubUrl: string
+    githubDiscussionId: string
+    githubDiscussionNumber: number
 }
 
 export type GitHubPostList = {
