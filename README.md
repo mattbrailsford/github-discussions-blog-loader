@@ -137,12 +137,13 @@ The loader will return an array of `Post` objects, each with the following data 
   updated: Date
   published: Date
   readingTime: string
-  githubUrl: string
-  number: number
   category: Category
   tags: string[]
   series?: Series
   author: Actor
+  githubUrl: string
+  githubDiscussionId: string
+  githubDiscussionNumber: number
 }
 ```
 
