@@ -1,6 +1,8 @@
 {
   "name": "github-discussions-blog-loader",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "GitHub Discussions Blog Loader for Astro",
+  "author": "Matt Brailsford",
   "type": "module",
   "exports": {
     ".": "./index.ts"
@@ -9,18 +11,32 @@
     "src",
     "index.ts"
   ],
-  "keywords": [
-    "astro-component"
-  ],
-  "scripts": {},
+  "scripts": {
+    "build": "tsc --build",
+    "build:watch": "tsc --watch",
+    "prepack": "npx mkdirp ./artifacts",
+    "pack": "npm pack --pack-destination ./artifacts"
+  },
   "devDependencies": {
-    "astro": "^4.15.10"
+    "astro": "^4.15.10",
+    "reading-time-estimator": "^1.11.0",
+    "slugify": "^1.6.6",
+    "string-strip-html": "^13.4.8",
+    "typescript": "^5.6.2",
+    "mkdirp": "^3.0.1"
   },
   "peerDependencies": {
-    "astro": "^4.0.0"
+    "astro": "^4.14.0 || ^5.0.0"
   },
-  "dependencies": {
-    "@astrojs/check": "^0.9.3",
-    "typescript": "^5.6.2"
-  }
+  "keywords": [
+    "astro-component",
+    "withastro",
+    "astro-loader"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattbrailsford/github-discussions-blog-loader.git"
+  },
+  "homepage": "https://github.com/mattbrailsford/github-discussions-blog-loader"
 }

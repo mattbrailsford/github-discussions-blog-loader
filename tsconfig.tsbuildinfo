@@ -1,0 +1,1 @@
+{"root":["./index.ts","./src/types.ts","./src/client/client.ts","./src/client/graphql.ts","./src/client/mapper.ts","./src/loader/loader.ts","./src/loader/processor.ts"],"version":"5.6.2"}
