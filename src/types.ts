@@ -14,8 +14,8 @@ export type GitHubRepository = {
 }
 
 export type GitHubMappings = {
-    blogPostCategory: string
-    draftLabel: string
+    blogPostCategory?: string
+    draftLabel?: string
     tagLabelPrefix: string
     seriesLabelPrefix: string
 }
