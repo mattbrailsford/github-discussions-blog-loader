@@ -105,7 +105,6 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
 The default mapping options are available via a `DEFAULT_MAPPINGS` export and so you can override just the properties you need to change using the spread operator:
 
 ```typescript
-// src/content/config.ts
 import { defineCollection } from "astro:content";
 import { githubDiscussionsBlogLoader, DEFAULT_MAPPINGS } from "github-discussions-blog-loader";
 
