@@ -17,6 +17,11 @@
             body
             createdAt
             updatedAt
+            category {
+                id
+                name
+                description
+            }
             author {
               avatarUrl
               login

@@ -72,7 +72,24 @@ const { post } = Astro.props;
 
 ## Options
 
-The `githubDiscussionsBlogLoader` function takes an options object with the following properties:
+The `githubDiscussionsBlogLoader` function takes an options object with the following structure:
+
+```text
+{
+  auth: string,
+  repo: {
+    name: string,
+    owner: string,
+  },
+  incremental?: boolean,
+  mappings?: {
+    blogPostCategory?: string,
+    draftLabel?: string,
+    tagLabelPrefix?: string,
+    seriesLabelPrefix?: string,
+  }
+}
+```
 
 - `auth`: A [GitHub access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permissions to access discussions.
 - `repo`: Details of the GitHub repository to connect to.
@@ -125,6 +142,10 @@ The loader will return an array of `Post` objects, each with the following data 
   readingTime: string
   githubUrl: string
   number: number
+  category: {
+    id: string
+    name: string
+  }
   tags: string[]
   series?: {
     id: string

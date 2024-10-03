@@ -82,6 +82,10 @@ export function githubDiscussionsBlogLoader({
             readingTime: z.string(),
             githubUrl: z.string(),
             number: z.number(),
+            category: z.object({
+                id: z.string(),
+                name: z.string(),
+            }),
             tags: z.array(z.string()),
             series: z.object({
                 id: z.string(),

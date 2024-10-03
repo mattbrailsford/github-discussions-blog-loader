@@ -28,8 +28,9 @@ export type GitHubPost = Record<string, unknown> & {
     updated: Date
     githubUrl: string
     number: number
+    category: GitHubCategory
     tags: string[]
-    series?: GitHubPostSeries
+    series?: GitHubSeries
     author: GitHubActor
 }
 
@@ -44,7 +45,12 @@ export type GitHubPageInfo = {
     endCursor: string
 }
 
-export type GitHubPostSeries = {
+export type GitHubCategory = {
+    id: string
+    name: string
+}
+
+export type GitHubSeries = {
     id: string
     name: string
 }
@@ -55,13 +61,15 @@ export type GitHubActor = {
     url: string
 }
 
-export type PostSeries = GitHubPostSeries
-export type PostActor = GitHubActor
+export type Category = GitHubCategory
+export type Series = GitHubSeries
+export type Actor = GitHubActor
 export type Post = GitHubPost & {
     slug: string
     description?: string
     readingTime: string
     published: Date
-    series?: PostSeries
-    author: PostActor
+    category?: Category
+    series?: Series
+    author: Actor
 }
