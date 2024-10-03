@@ -120,8 +120,11 @@ const blogPosts = defineCollection({
 export const collections = { blogPosts };
 ```
 
-## Post Data
+## Type Information
+
 The loader will return an array of `Post` objects, each with the following data structure:
+
+### `Post`
 
 ```text
 {
@@ -136,19 +139,43 @@ The loader will return an array of `Post` objects, each with the following data 
   readingTime: string
   githubUrl: string
   number: number
-  category: {
-    id: string
-    name: string
-  }
+  category: Category
   tags: string[]
-  series?: {
-    id: string
-    name: string
-  }
-  author: {
-    avatarUrl: string
-    username: string
-    url: string
-  }
+  series?: Series
+  author: Actor
 }
+```
+
+### `Category`
+
+```text
+{
+  id: string
+  name: string
+}
+```
+
+### `Series`
+
+```text
+{
+  id: string
+  name: string
+}
+```
+
+### `Actor`
+
+```text
+{
+  avatarUrl: string
+  username: string
+  url: string
+}
+```
+
+TypeScript types are available for all of the above.
+
+```typescript
+import type { Post, Category, Series, Actor } from 'github-discussions-blog-loader'
 ```
