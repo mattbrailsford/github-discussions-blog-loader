@@ -33,7 +33,7 @@ export async function githubPostProcessor(config: AstroConfig) {
                 slug: frontmatter?.slug ?? slugify(input.title, { lower: true }),
                 description: frontmatter?.description ?? truncate(text, 150),
                 body: html,
-                published: new Date(frontmatter?.published ?? input.createdAt),
+                published: new Date(frontmatter?.published ?? input.created),
                 readingTime: readingTime(text, 240).text,
             };
             return { post, metadata: { ...metadata, frontmatter } };
