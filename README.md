@@ -2,26 +2,19 @@
 
 This package provides a GitHub Discussions loader for Astro, allowing you to use [GitHub Discussions as a blog engine](https://mattbrailsford.dev/building-a-github-discussions-powered-blog).
 
+## Requirements
+
+This package requires Astro 5.0.0-beta or later.
+
 ## Installation
 
 ```sh
 npm install github-discussions-blog-loader
 ```
 
-## Usage
+## Usage 
 
-This package requires Astro 4.14.0 or later. You must enable the experimental content layer in Astro unless you are using version 5.0.0-beta or later. You can do this by adding the following to your `astro.config.mjs`:
-
-```javascript
-export default defineConfig({
-  // ...
-  experimental: {
-    contentLayer: true,
-  },
-});
-```
-
-You can then use the feed loader in your content configuration at `src/content/config.ts`:
+You can use the `githubDiscussionsBlogLoader` in your content configuration at `src/content/config.ts`:
 
 ```typescript
 import { defineCollection } from "astro:content";
@@ -91,16 +84,18 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
 }
 ```
 
-- `auth`: A [GitHub access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permissions to access discussions.
-- `repo`: Details of the GitHub repository to connect to.
-- `repo.name`: The name of the repository.
-- `repo.owner`: The owner of the repository.
-- `incremental`: If `true`, the loader will only fetch new/updated discussions since the last build. Otherwise the loader will fetch all blog posts on every build. The default is `false`.
-- `mappings`: Details of the how to map the GitHub Discussions data to the blog post data. 
-- `mappings.blogPostCategory`: A GitHub Discussions category used to define blog posts. The default it `undefined` and so will fetch all categories.
-- `mappings.draftLabel`: The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`.
-- `mappings.tagLabelPrefix`: A prefix that identifies a GitHub Discussions label as a tag. The default is `"tag/"`.
-- `mappings.seriesLabelPrefix`: A prefix that identifies a GitHub Discussions label as a series container. The default is `"series/"`.
+| Property | Description |
+| --- | --- |
+| `auth` | A [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permissions to access discussions on the target repository. |
+| `repo` | Details of the GitHub repository to connect to. |
+| `repo.name` | The name of the repository. |
+| `repo.owner` | The owner of the repository. |
+| `incremental` | If `true`, the loader will only fetch new/updated discussions since the last build. Otherwise the loader will fetch all blog posts on every build. The default is `false`. |
+| `mappings` | Details of the how to map the GitHub Discussions data to the blog post data. |
+| `mappings.blogPostCategory` | A GitHub Discussions category that defines which discussion category is considered a blog post. The default is `undefined` and so will fetch all discussions. |
+| `mappings.draftLabel` | The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`. |
+| `mappings.tagLabelPrefix` | A prefix that identifies a GitHub Discussions label as a tag. The default is `"tag/"`. |
+| `mappings.seriesLabelPrefix` | A prefix that identifies a GitHub Discussions label as a series container. The default is `"series/"`. |
 
 The default mapping options are available via a `DEFAULT_MAPPINGS` export and so you can override just the properties you need to change using the spread operator:
 

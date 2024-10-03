@@ -36,7 +36,7 @@ export async function githubPostProcessor(config: AstroConfig) {
                 published: new Date(frontmatter?.published ?? input.createdAt),
                 readingTime: readingTime(text, 240).text,
             };
-            return { post, metadata: { ...metadata, frontmatter, imagePaths: [...metadata.imagePaths] } };
+            return { post, metadata: { ...metadata, frontmatter } };
         }
     }
 }
