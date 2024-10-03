@@ -10,7 +10,7 @@ npm install github-discussions-blog-loader
 
 ## Usage
 
-This package requires Astro 4.14.0 or later. You must enable the experimental content layer in Astro unless you are using version 5.0.0-beta or later. You can do this by adding the following to your astro.config.mjs:
+This package requires Astro 4.14.0 or later. You must enable the experimental content layer in Astro unless you are using version 5.0.0-beta or later. You can do this by adding the following to your `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
@@ -21,10 +21,9 @@ export default defineConfig({
 });
 ```
 
-You can then use the feed loader in your content configuration:
+You can then use the feed loader in your content configuration at `src/content/config.ts`:
 
 ```typescript
-// src/content/config.ts
 import { defineCollection } from "astro:content";
 import { githubDiscussionsBlogLoader } from "github-discussions-blog-loader";
 
@@ -43,7 +42,6 @@ export const collections = { blogPosts };
 You can then use these like any other content collection in Astro:
 
 ```astro
-// src/pages/[slug].ts
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
