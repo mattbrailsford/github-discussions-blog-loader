@@ -1,6 +1,6 @@
 {
   "name": "github-discussions-blog-loader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GitHub Discussions Blog Loader for Astro",
   "author": "Matt Brailsford",
   "type": "module",
