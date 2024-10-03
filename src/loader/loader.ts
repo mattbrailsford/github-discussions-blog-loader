@@ -3,13 +3,7 @@ import { githubClient } from "../client/client.ts";
 import type { GitHubDiscussionsLoaderOptions, GitHubMappings } from "../types.ts";
 import { githubPostProcessor } from "./processor.ts";
 import { z } from 'astro/zod';
-
-export const DEFAULT_MAPPINGS : GitHubMappings = {
-    blogPostCategory: "Blog Post",
-    draftLabel: "state/draft",
-    tagLabelPrefix: "tag/",
-    seriesLabelPrefix: "series/"
-}
+import { DEFAULT_MAPPINGS } from "./consts.ts";
 
 export function githubDiscussionsBlogLoader({
     auth, 

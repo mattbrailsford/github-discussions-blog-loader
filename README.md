@@ -97,7 +97,7 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
 - `repo.owner`: The owner of the repository.
 - `incremental`: If `true`, the loader will only fetch new/updated discussions since the last build. Otherwise the loader will fetch all blog posts on every build. The default is `false`.
 - `mappings`: Details of the how to map the GitHub Discussions data to the blog post data. 
-- `mappings.blogPostCategory`: The GitHub Discussions category used to define blog posts. The default it `"Blog Post"`.
+- `mappings.blogPostCategory`: A GitHub Discussions category used to define blog posts. The default it `undefined` and so will fetch all categories.
 - `mappings.draftLabel`: The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`.
 - `mappings.tagLabelPrefix`: A prefix that identifies a GitHub Discussions label as a tag. The default is `"tag/"`.
 - `mappings.seriesLabelPrefix`: A prefix that identifies a GitHub Discussions label as a series container. The default is `"series/"`.
