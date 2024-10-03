@@ -43,7 +43,7 @@ import Layout from "../../layouts/Layout.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogPosts = await getCollection("blogPosts");
-  return customers.map((blogPost) => ({
+  return blogPosts.map((blogPost) => ({
     params: {
       slug: blogPost.id,
     },
