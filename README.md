@@ -1,35 +1,112 @@
-# Astro Starter Kit: Component Package
+# GitHub Discussions Blog Loader
 
-This is a template for an Astro component library. Use this template for writing components to use in multiple projects or publish to NPM.
+This package provides a GitHub Discussions loader for Astro, allowing you to use [GitHub Discussions as a blog engine](https://mattbrailsford.dev/building-a-github-discussions-powered-blog).
+
+## Installation
 
 ```sh
-npm create astro@latest -- --template component
+npm install github-discussions-blog-loader
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/non-html-pages)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/non-html-pages)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/component/devcontainer.json)
+## Usage
 
-## 🚀 Project Structure
+This package requires Astro 4.14.0 or later. You must enable the experimental content layer in Astro unless you are using version 5.0.0-beta or later. You can do this by adding the following to your astro.config.mjs:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── index.ts
-├── src
-│   └── MyComponent.astro
-├── tsconfig.json
-├── package.json
+```javascript
+export default defineConfig({
+  // ...
+  experimental: {
+    contentLayer: true,
+  },
+});
 ```
 
-The `index.ts` file is the "entry point" for your package. Export your components in `index.ts` to make them importable from your package.
+You can then use the feed loader in your content configuration:
 
-## 🧞 Commands
+```typescript
+// src/content/config.ts
+import { defineCollection } from "astro:content";
+import { githubDiscussionsBlogLoader } from "github-discussions-blog-loader";
 
-All commands are run from the root of the project, from a terminal:
+const blogPosts = defineCollection({
+  loader: githubDiscussionsBlogLoader({
+      auth: GITHUB_ACCESS_TOKEN,
+      repo: {
+          name: GITHUB_REPO_NAME,
+          owner: GITHUB_REPO_OWNER,
+      },
+  })
+});
 
-| Command       | Action                                                                                                                                                                                                                           |
-| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm link`    | Registers this package locally. Run `npm link my-component-library` in an Astro project to install your components                                                                                                               |
-| `npm publish` | [Publishes](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages#publishing-unscoped-public-packages) this package to NPM. Requires you to be [logged in](https://docs.npmjs.com/cli/v8/commands/npm-adduser) |
+export const collections = { blogPosts };
+```
+You can then use these like any other content collection in Astro:
+
+```astro
+// src/pages/[slug].ts
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import type { Post } from "github-discussions-blog-loader";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const blogPosts = await getCollection("blogPosts");
+  return customers.map((blogPost) => ({
+    params: {
+      slug: blogPost.id,
+    },
+    props: { post: blogPost.data },
+  }));
+};
+
+type Props = { post: Post };
+
+const { post } = Astro.props;
+---
+
+<Layout title={post.title}>
+  <h1>{post.title}</h1>
+  <div set:html={post.body}></div>
+</Layout>
+
+```
+
+## Options
+
+The `githubDiscussionsBlogLoader` function takes an options object with the following properties:
+
+- `auth`: A [GitHub access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permissions to access discussions.
+- `repo`: Details of the GitHub repository to connect to.
+- `repo.name`: The name of the repository.
+- `repo.owner`: The owner of the repository.
+- `incremental`: If `true`, the loader will only fetch new/updated discussions since the last build. Otherwise the loader will fetch all blog posts on ever build. The default is `false`.
+- `mappings`: Details of the how to map the GitHub Discussions data to the blog post data. 
+- `mappings.blogPostCategory`: The GitHub Discussions category used to define blog posts. The default it `"Blog Post"`.
+- `mappings.draftLabel`: The GitHub Discussions label that define a blog post as draft. The default is `"state/draft"`.
+- `mappings.tagLabelPrefix`: A prefix that identifies a GitHub Discussions label as a tag. The default is `"tag/"`.
+- `mappings.seriesLabelPrefix`: A prefix that identifies a GitHub Discussions label as a series container. The default is `"series/"`.
+
+The default mapping options are available via a `DEFAULT_MAPPINGS` export and so you can override just the properties you need to change using the spread operator:
+
+```typescript
+// src/content/config.ts
+import { defineCollection } from "astro:content";
+import { githubDiscussionsBlogLoader, DEFAULT_MAPPINGS } from "github-discussions-blog-loader";
+
+const blogPosts = defineCollection({
+  loader: githubDiscussionsBlogLoader({
+      auth: GITHUB_ACCESS_TOKEN,
+      repo: {
+          name: GITHUB_REPO_NAME,
+          owner: GITHUB_REPO_OWNER,
+      },
+      mappings: {
+          ...DEFAULT_MAPPINGS,
+          blogPostCategory: "Article",
+      }
+  })
+});
+
+export const collections = { blogPosts };
+```
