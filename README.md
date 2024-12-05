@@ -4,7 +4,7 @@ This package provides a GitHub Discussions loader for Astro, allowing you to use
 
 ## Requirements
 
-This package requires Astro 5.0.0-beta or later.
+This package requires Astro 5.0.0 or later.
 
 ## Installation
 
