@@ -6,15 +6,34 @@ const GITHUB_API_URL : string = 'https://api.github.com/graphql'
 
 export function githubClient(options : GitHubClientOptions) {
 
+    const buildLabelExclusions = (mappings: typeof options.mappings): string => {
+        const exclusions: string[] = [];
+        
+        // Support legacy draftLabel for backwards compatibility
+        if (mappings?.draftLabel) {
+            exclusions.push(`-label:"${mappings.draftLabel}"`);
+        }
+        
+        // Support new ignoreLabels with exact matches
+        if (mappings?.ignoreLabels) {
+            mappings.ignoreLabels.forEach(label => {
+                exclusions.push(`-label:"${label}"`);
+            });
+        }
+        
+        return exclusions.join(' ');
+    };
+
     const getPosts = async  (limit = 50, after?: string, lastModified?: string): Promise<GitHubPostList>  => {
 
         // Build a query to search for blog post discussions
         // repo:... searches our specific repository
         // category:... limits the search to discussions with the blog post category
-        // -label:... excludes discussions with the draft label
+        // -label:... excludes discussions with specific labels
         // sort:updated-asc sorts the results by the updated date in ascending order (must be ascending to allow tracking of last modified date)
         // updated:>${lastModified} limits the search to discussions updated after the supplied lastModified date
-        const query = `repo:${options.repo.owner}/${options.repo.name} sort:updated-asc ${options.mappings!.blogPostCategory ? `category:"${options.mappings!.blogPostCategory}"` : ''} ${options.mappings!.draftLabel ? `-label:"${options.mappings!.draftLabel}"` : ''} ${lastModified ? `updated:>${lastModified}` : ''}`
+        const labelExclusions = buildLabelExclusions(options.mappings);
+        const query = `repo:${options.repo.owner}/${options.repo.name} sort:updated-asc ${options.mappings!.blogPostCategory ? `category:"${options.mappings!.blogPostCategory}"` : ''} ${labelExclusions} ${lastModified ? `updated:>${lastModified}` : ''}`
         
         const response = await fetch(GITHUB_API_URL,
         {

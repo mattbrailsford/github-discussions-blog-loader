@@ -79,6 +79,7 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
   mappings?: {
     blogPostCategory?: string,
     draftLabel?: string,
+    ignoreLabels?: string[],
     tagLabelPrefix?: string,
     seriesLabelPrefix?: string,
   }
@@ -95,7 +96,8 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
 | `includeScheduledPosts` | If `true` the loader will include scheduled posts (posts with a future publication date). The default is `false`. |
 | `mappings` | Details of the how to map the GitHub Discussions data to the blog post data. |
 | `mappings.blogPostCategory` | A GitHub Discussions category that defines which discussion category is considered a blog post. The default is `undefined` and so will fetch all discussions. |
-| `mappings.draftLabel` | The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`. |
+| `mappings.draftLabel` | **[Legacy]** The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`. Use `ignoreLabels` for new implementations. |
+| `mappings.ignoreLabels` | An array of GitHub Discussions labels to exclude from the loader results. Supports multiple exact label matches. Takes precedence over `draftLabel`. Example: `["state/draft", "wip", "archived"]`. |
 | `mappings.tagLabelPrefix` | A prefix that identifies a GitHub Discussions label as a tag. The default is `"tag/"`. |
 | `mappings.seriesLabelPrefix` | A prefix that identifies a GitHub Discussions label as a series container. The default is `"series/"`. |
 
@@ -115,6 +117,7 @@ const blogPosts = defineCollection({
       mappings: {
           ...DEFAULT_MAPPINGS,
           blogPostCategory: "Article",
+          ignoreLabels: ["state/draft", "wip", "archived"],
       }
   })
 });
