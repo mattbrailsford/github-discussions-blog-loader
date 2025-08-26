@@ -1,5 +1,6 @@
 ﻿export type GitHubDiscussionsLoaderOptions = GitHubClientOptions & {
     incremental?: boolean
+    includeScheduledPosts?: boolean
 }
 
 export type GitHubClientOptions = {
