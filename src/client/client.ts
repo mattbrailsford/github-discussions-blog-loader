@@ -9,16 +9,12 @@ export function githubClient(options : GitHubClientOptions) {
     const buildLabelExclusions = (mappings: typeof options.mappings): string => {
         const exclusions: string[] = [];
         
-        // Support legacy draftLabel for backwards compatibility
-        if (mappings?.draftLabel) {
-            exclusions.push(`-label:"${mappings.draftLabel}"`);
-        }
-        
-        // Support new ignoreLabels with exact matches
         if (mappings?.ignoreLabels) {
             mappings.ignoreLabels.forEach(label => {
                 exclusions.push(`-label:"${label}"`);
             });
+        } else if (mappings?.draftLabel) {
+            exclusions.push(`-label:"${mappings.draftLabel}"`);
         }
         
         return exclusions.join(' ');

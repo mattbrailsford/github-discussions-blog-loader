@@ -75,7 +75,6 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
     owner: string,
   },
   incremental?: boolean,
-  includeScheduledPosts?: boolean,
   mappings?: {
     blogPostCategory?: string,
     draftLabel?: string,
@@ -93,7 +92,6 @@ The `githubDiscussionsBlogLoader` function takes an options object with the foll
 | `repo.name` | The name of the repository. |
 | `repo.owner` | The owner of the repository. |
 | `incremental` | If `true`, the loader will only fetch new/updated discussions since the last build. Otherwise the loader will fetch all blog posts on every build. The default is `false`. |
-| `includeScheduledPosts` | If `true` the loader will include scheduled posts (posts with a future publication date). The default is `false`. |
 | `mappings` | Details of the how to map the GitHub Discussions data to the blog post data. |
 | `mappings.blogPostCategory` | A GitHub Discussions category that defines which discussion category is considered a blog post. The default is `undefined` and so will fetch all discussions. |
 | `mappings.draftLabel` | **[Legacy]** The GitHub Discussions label that defines a blog post as draft and so will be excluded from the loaders results. The default is `"state/draft"`. Use `ignoreLabels` for new implementations. |
@@ -117,7 +115,7 @@ const blogPosts = defineCollection({
       mappings: {
           ...DEFAULT_MAPPINGS,
           blogPostCategory: "Article",
-          ignoreLabels: ["state/draft", "wip", "archived"],
+          ignoreLabels: ["state/draft", "state/scheduled"],
       }
   })
 });

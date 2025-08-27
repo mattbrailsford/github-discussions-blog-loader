@@ -9,7 +9,6 @@ export function githubDiscussionsBlogLoader({
     auth, 
     repo, 
     incremental = false,
-    includeScheduledPosts = false,
     mappings = DEFAULT_MAPPINGS
 } : GitHubDiscussionsLoaderOptions): Loader {
     return {
@@ -37,10 +36,6 @@ export function githubDiscussionsBlogLoader({
             for (const item of posts) {
 
                 const { post, metadata } = await processor.process(item);
-                
-                if (includeScheduledPosts === false && post.published > new Date()) {
-                    continue;
-                }
 
                 const data = await parseData({
                     id: item.id,
