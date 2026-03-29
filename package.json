@@ -1,6 +1,6 @@
 {
   "name": "github-discussions-blog-loader",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "GitHub Discussions Blog Loader for Astro",
   "author": "Matt Brailsford",
   "type": "module",
@@ -18,18 +18,17 @@
     "pack": "npm pack --pack-destination ./artifacts"
   },
   "dependencies": {
-    "reading-time-estimator": "^1.14.0",
-    "string-strip-html": "^13.4.13",
-    "gray-matter": "^4.0.3",
-    "slugify": "^1.6.6"
+    "reading-time-estimator": "^2.1.1",
+    "string-strip-html": "^13.5.3",
+    "slugify": "^1.6.8"
   },
   "devDependencies": {
-    "astro": "^5.0.2",
-    "typescript": "^5.9.2",
+    "astro": "^6.1.1",
+    "typescript": "^6.0.2",
     "mkdirp": "^3.0.1"
   },
   "peerDependencies": {
-    "astro": "^5.0.0"
+    "astro": "^6.0.0"
   },
   "keywords": [
     "astro-component",
